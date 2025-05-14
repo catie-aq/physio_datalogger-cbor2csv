@@ -1,0 +1,5 @@
+.build
+projectfiles
+.venv/
+# Do NOT ignore files below
+**/build/

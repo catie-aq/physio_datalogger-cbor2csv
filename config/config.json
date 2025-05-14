@@ -1,0 +1,71 @@
+{
+    "devices": [
+        {
+            "name": "AFE4960_03",
+            "type": 1,
+            "synchronizable": true,
+            "manual_start": true,
+            "subscribe_uuid": "c2890003ca9a11ebb8bc0242ac130003",
+            "start_stop_uuid": "c2890004ca9a11ebb8bc0242ac130003",
+            "communication":
+            {
+                "acquisition_freq": 1000,
+                "frames": [
+                    {
+                        "name": "data",
+                        "type" : 0,
+                        "size": 9,
+                        "quantity": 20,
+                        "data":
+                        [
+                            {"timestamp": {"msb": 8, "lsb": 5}},
+                            {"raw": {"msb": 0, "lsb": 2}},
+                            {"rr": {"msb": 3, "lsb": 4}}
+                        ]
+                    }
+                ],
+                "type": [
+                    {
+                        "__comment": "base data for csv row",
+                        "default_value": 0,
+                        "keep_last": false
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Z_Motion",
+            "type": 0,
+            "synchronizable": true,
+            "manual_start": false,
+            "subscribe_uuid": "6e400003b5a3f393e0a9e50e24dcca9e",
+            "start_stop_uuid": "",
+            "communication":
+            {
+                "acquisition_freq": 100,
+                "frames": [
+                    {
+                        "name": "data",
+                        "type": 0,
+                        "size": 10,
+                        "quantity": 2,
+                        "data":
+                        [
+                            {"timestamp": {"msb": 3, "lsb": 0}},
+                            {"lacc_x": {"msb": 4, "lsb": 5}},
+                            {"lacc_y": {"msb": 6, "lsb": 7}},
+                            {"lacc_z": {"msb": 8, "lsb": 9}}
+                        ]
+                    }
+                ],
+                "type": [
+                    {
+                        "__comment": "base data for csv row",
+                        "default_value": 0,
+                        "keep_last": false
+                    }
+                ]
+            }
+        }
+    ]
+}
