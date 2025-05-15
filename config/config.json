@@ -18,9 +18,9 @@
                         "quantity": 20,
                         "data":
                         [
-                            {"timestamp": {"msb": 8, "lsb": 5}},
-                            {"raw": {"msb": 0, "lsb": 2}},
-                            {"rr": {"msb": 3, "lsb": 4}}
+                            {"name": "timestamp","msb": 8, "lsb": 5},
+                            {"name": "raw", "msb": 0, "lsb": 2},
+                            {"name": "rr", "msb": 3, "lsb": 4}
                         ]
                     }
                 ],
@@ -51,10 +51,10 @@
                         "quantity": 2,
                         "data":
                         [
-                            {"timestamp": {"msb": 3, "lsb": 0}},
-                            {"lacc_x": {"msb": 4, "lsb": 5}},
-                            {"lacc_y": {"msb": 6, "lsb": 7}},
-                            {"lacc_z": {"msb": 8, "lsb": 9}}
+                            {"name": "timestamp", "msb": 3, "lsb": 0},
+                            {"name": "lacc_x", "msb": 4, "lsb": 5},
+                            {"name": "lacc_y", "msb": 6, "lsb": 7},
+                            {"name": "lacc_z", "msb": 8, "lsb": 9}
                         ]
                     }
                 ],
