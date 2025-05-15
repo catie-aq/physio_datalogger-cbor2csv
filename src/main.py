@@ -11,9 +11,8 @@ with open(config_path, "r", encoding="utf-8") as file:
 for device in config["devices"]:
     device_name = device["name"]
     
-    frame_size = device["communication"]["frames"][0]["size"]
-    
     for frame in device["communication"]["frames"]:
+        frame_size = frame["size"]
         for field in frame["data"]:
             entry = {
                 "device": device_name,
