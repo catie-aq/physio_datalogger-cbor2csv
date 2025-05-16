@@ -1,4 +1,5 @@
 import json
+import csv
 from cbor2 import CBORDecoder
 
 CONFIG_PATH = "config/config.json"
@@ -80,3 +81,15 @@ with open(CBOR_PATH, "rb") as fp:
             frame_count += 1  
 
 print(f"Frames: {frame_count}")
+
+with open(CSV_PATH, "w", newline="") as f:
+    if not data_dict:
+        print("No data extracted.")
+    else:
+        fieldnames = ["timestamp"] + [k for k, _, _ in fields if k != "timestamp"]
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for t in sorted(data_dict):
+            writer.writerow(data_dict[t])
+
+print(f"Data exported to: {CSV_PATH}")
