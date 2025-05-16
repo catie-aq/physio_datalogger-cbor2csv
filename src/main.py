@@ -1,10 +1,26 @@
 import json
 
-config_path = "config/config.json"
+CONFIG_PATH = "config/config.json"
+CBOR_PATH = "data/Z_Motion_2026-01-19_10-48-03.cbor"
+#CBOR_PATH = "data/AFE4960_03_2026-01-12_20-10-50.cbor"
 
-with open(config_path, "r", encoding="utf-8") as file:
-    config = json.load(file)
+with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+    config = json.load(f)
 
-print("Configuration input:")
-for key, value in config.items():
-    print(f"{key} : {value}\n")
+print(f"CBOR: {CBOR_PATH} | SPLIT:{'_'.join(CBOR_PATH.split('/')[-1].split('_')[0:-2])}")
+config = next(dev for dev in config["devices"] if dev["name"] == '_'.join(CBOR_PATH.split('/')[-1].split('_')[0:-2]))
+fields = []
+for frame in config["communication"]["frames"]:
+    for entry in frame["data"]:
+        for name, pos in entry.items():
+            # print(f"Field: {name}")
+            fields.append((name, pos["msb"], pos["lsb"]))
+
+# Print the fields
+print("Fields:")
+for field in fields:
+    print(f"  {field[0]}: msb={field[1]}, lsb={field[2]}")
+
+# print quantities
+print("Quantities:")
+print(f"  {frame['quantity']}")
