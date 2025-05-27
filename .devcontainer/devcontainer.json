@@ -1,0 +1,10 @@
+{
+  "name": "physio_datalogger-cbor2csv",
+  "image": "python:3.11",
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/pipx-package:1": {},
+    "ghcr.io/devcontainers-contrib/features/poetry:2": {},
+    "ghcr.io/devcontainers-contrib/features/pre-commit:2": {}
+  },
+  "postStartCommand": "pre-commit install"
+}
