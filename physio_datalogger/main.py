@@ -1,7 +1,8 @@
+import click
 import json
 import csv
-from cbor2 import CBORDecoder
 from pathlib import Path
+from cbor2 import CBORDecoder
 
 
 def iterdecode(f):
@@ -13,26 +14,47 @@ def iterdecode(f):
             return
 
 
-def main():
-    print("Physio Datalogger is running!")
+@click.command()
+@click.option(
+    "--input",
+    "input_path",
+    required=True,
+    type=click.Path(exists=True),
+    help="Input CBOR file",
+)
+@click.option(
+    "--config",
+    "config_path",
+    required=True,
+    type=click.Path(exists=True),
+    help="Device config JSON file",
+)
+@click.option(
+    "--output",
+    "output_path",
+    required=True,
+    type=click.Path(),
+    help="Output CSV file",
+)
+def main(input_path, config_path, output_path):
+    input_path = Path(input_path)
+    config_path = Path(config_path)
+    output_path = Path(output_path)
 
-    CONFIG_PATH = Path("config/config.json")
-    CBOR_PATH = Path("data/Z_Motion_2026-01-14_21-52-32.cbor")
-    CSV_PATH = Path("output") / f"{CBOR_PATH.stem}_result.csv"
-
-    with CONFIG_PATH.open("r", encoding="utf-8") as f:
+    with config_path.open("r", encoding="utf-8") as f:
         config = json.load(f)
 
-    device_name = "_".join(CBOR_PATH.name.split("_")[0:-2])
+    device_name = "_".join(input_path.name.split("_")[0:-2])
     device_config = next(dev for dev in config["devices"] if dev["name"] == device_name)
 
-    fields = []
-    for frame in device_config["communication"]["frames"]:
-        for entry in frame["data"]:
-            fields.append((entry["name"], entry["msb"], entry["lsb"]))
+    fields = [
+        (entry["name"], entry["msb"], entry["lsb"])
+        for frame in device_config["communication"]["frames"]
+        for entry in frame["data"]
+    ]
 
     decoded_rows = []
-    with CBOR_PATH.open("rb") as fp:
+    with input_path.open("rb") as fp:
         for obj in iterdecode(fp):
             if not isinstance(obj, list) or len(obj) != 2:
                 continue
@@ -46,30 +68,25 @@ def main():
                 buffer = bytearray(frame)
 
                 for name, msb, lsb in fields:
-                    start = min(msb, lsb)
-                    end = max(msb, lsb)
+                    start, end = min(msb, lsb), max(msb, lsb)
                     if end >= len(buffer):
                         break
-                    if start == end:
-                        val = (
-                            buffer[start]
-                            if buffer[start] < 128
-                            else buffer[start] - 256
-                        )
-                    else:
-                        val = int.from_bytes(
+                    val = (
+                        buffer[start]
+                        if start == end
+                        else int.from_bytes(
                             buffer[start : end + 1], byteorder="little", signed=True
                         )
+                    )
                     row[name] = val
 
                 if "timestamp" in row:
                     decoded_rows.append(row)
 
     fieldnames = [name for name, _, _ in fields]
-    with CSV_PATH.open("w", newline="") as csvfile:
+    with output_path.open("w", newline="") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
-        for row in decoded_rows:
-            writer.writerow(row)
+        writer.writerows(decoded_rows)
 
-    print(f"Data exported to: {CSV_PATH}")
+    click.echo(f" Data exported to {output_path}")

@@ -11,7 +11,9 @@ readme = "README.md"
 packages = [{ include = "physio_datalogger" }]
 
 [tool.poetry.scripts]
-physio_datalogger = "physio_datalogger.main:main"
+physio_datalogger = "physio_datalogger.main:main" #entrée CLI
 
 [tool.poetry.dependencies]
 python = "^3.11"
+pre-commit = "^4.2.0"
+click = "^8.1.8"
