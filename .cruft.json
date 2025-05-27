@@ -7,8 +7,8 @@
       "email": "a.ndiaye@catie.fr",
       "name": "Aziz Ndiaye",
       "project_name": "physio_datalogger-cbor2csv",
-      "package_name": "dummy_project",
-      "project_description": "A wonderful project",
+      "package_name": "physio_datalogger",
+      "project_description": "Convert CBOR logs to CSV format for physiological data logging.",
       "type": "script",
       "_copy_without_render": [
         ".github/workflows/autoupdate.yml",
