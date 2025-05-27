@@ -1,13 +1,16 @@
 def main():
     print("Physio Datalogger is running!")
+
+
 import json
 import csv
 from cbor2 import CBORDecoder
 
 CONFIG_PATH = "config/config.json"
 CBOR_PATH = "data/Z_Motion_2026-01-14_21-52-32.cbor"
-#CSV_PATH = "data/Z_Motion_extracted_frames.csv"
-CSV_PATH = "output/" + CBOR_PATH.split('/')[-1].split('.')[0] + "_result.csv"
+# CSV_PATH = "data/Z_Motion_extracted_frames.csv"
+CSV_PATH = "output/" + CBOR_PATH.split("/")[-1].split(".")[0] + "_result.csv"
+
 
 def iterdecode(f):
     decoder = CBORDecoder(f)
@@ -17,10 +20,11 @@ def iterdecode(f):
         except EOFError:
             return
 
+
 with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     config = json.load(f)
 
-device_name = '_'.join(CBOR_PATH.split('/')[-1].split('_')[0:-2])
+device_name = "_".join(CBOR_PATH.split("/")[-1].split("_")[0:-2])
 device_config = next(dev for dev in config["devices"] if dev["name"] == device_name)
 
 fields = []
@@ -38,7 +42,7 @@ with open(CBOR_PATH, "rb") as fp:
             continue
 
         for i in range(0, 20, 10):
-            frame = raw[i:i+10]
+            frame = raw[i : i + 10]
             row = {}
             buffer = bytearray(frame)
 
@@ -52,7 +56,9 @@ with open(CBOR_PATH, "rb") as fp:
                 if start == end:
                     val = buffer[start] if buffer[start] < 128 else buffer[start] - 256
                 else:
-                    val = int.from_bytes(buffer[start:end+1], byteorder="little", signed=True)
+                    val = int.from_bytes(
+                        buffer[start : end + 1], byteorder="little", signed=True
+                    )
 
                 row[name] = val
 
