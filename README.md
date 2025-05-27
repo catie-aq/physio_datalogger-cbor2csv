@@ -1,6 +1,6 @@
 # physio_datalogger-cbor2csv
 
-CBOR TO CSV is a tool designed to convert CBOR (Concise Binary Object Representation) data into CSV format. 
+CBOR TO CSV is a tool designed to convert CBOR (Concise Binary Object Representation) data into CSV format.
 
 Additional line of information text about what the project does.
 
