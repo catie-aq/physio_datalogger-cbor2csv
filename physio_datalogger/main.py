@@ -1,3 +1,5 @@
+def main():
+    print("Physio Datalogger is running!")
 import json
 import csv
 from cbor2 import CBORDecoder
@@ -5,7 +7,7 @@ from cbor2 import CBORDecoder
 CONFIG_PATH = "config/config.json"
 CBOR_PATH = "data/Z_Motion_2026-01-14_21-52-32.cbor"
 #CSV_PATH = "data/Z_Motion_extracted_frames.csv"
-CSV_PATH = "data/" + CBOR_PATH.split('/')[-1].split('.')[0] + "_result.csv"
+CSV_PATH = "output/" + CBOR_PATH.split('/')[-1].split('.')[0] + "_result.csv"
 
 def iterdecode(f):
     decoder = CBORDecoder(f)

@@ -1,0 +1,22 @@
+{
+  "template": "https://github.com/catie-aq/cookiecutter_python-package.git",
+  "commit": "1dc7ae0f575e4a212cddd04411d72db93f17a6e7",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "email": "a.ndiaye@catie.fr",
+      "name": "Aziz Ndiaye",
+      "project_name": "physio_datalogger-cbor2csv",
+      "package_name": "dummy_project",
+      "project_description": "A wonderful project",
+      "type": "script",
+      "_copy_without_render": [
+        ".github/workflows/autoupdate.yml",
+        "helm/*"
+      ],
+      "_template": "https://github.com/catie-aq/cookiecutter_python-package.git",
+      "_commit": "1dc7ae0f575e4a212cddd04411d72db93f17a6e7"
+    }
+  },
+  "directory": null
+}
